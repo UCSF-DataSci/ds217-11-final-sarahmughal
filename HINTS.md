@@ -1,6 +1,18 @@
-# Troubleshooting Tips: Final Exam
+# Hints & Troubleshooting: Final Exam
 
-Common issues and solutions for the Chicago Beach Weather Sensors analysis.
+Common issues, solutions, and hints for the Chicago Beach Weather Sensors analysis.
+
+---
+
+## Q6 Feature Selection Hints
+
+When preparing features for modeling, you'll need to exclude non-predictive columns. For this dataset, consider excluding:
+
+- **Identifiers:** `Measurement ID`, `Measurement Timestamp Label`
+- **Categorical text:** `Station Name`, `Precipitation Type` (unless you one-hot encode them)
+- **The target variable** and any features derived from it
+
+Use `df.select_dtypes(include=[np.number])` to select only numeric columns, then manually exclude the target.
 
 ---
 
@@ -258,9 +270,9 @@ Common issues and solutions for the Chicago Beach Weather Sensors analysis.
 
 ### Getting Help
 1. Review Lecture 11 notebooks for similar operations
-2. Check pandas documentation: https://pandas.pydata.org/docs/
+2. Consult the textbook or online documentation
 3. Review error messages carefully - they often tell you what's wrong
-4. Contact instructor for clarification (not solutions)
+4. Contact instructor and EAs for assistance (clarification and nudges)
 
 ---
 
