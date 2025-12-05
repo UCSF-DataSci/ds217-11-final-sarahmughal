@@ -1,0 +1,31 @@
+
+DATA CLEANING REPORT
+====================
+Rows before cleaning: 196279
+
+Missing Data Handling:
+- Air Temperature: 75 missing values (0.0%)
+- Wet Bulb Temperature: 75930 missing values (38.7%)
+- Rain Intensity: 75930 missing values (38.7%)
+- Total Rain: 75930 missing values (38.7%)
+- Precipitation Type: 75930 missing values (38.7%)
+- Barometric Pressure: 146 missing values (0.1%)
+- Heading: 75930 missing values (38.7%)
+  Method: Forward-fill (time series appropriate)
+  Result: All missing values filled
+
+
+Outlier Handling:
+- Air Temperature: Detected 97 outliers using IQR method (1.5xIQR)
+  Method: Capped at bounds [-21.5, 47.3]
+  Result: 97 values capped
+
+
+Duplicates Removed: 0
+
+
+Data Type Conversions:
+- Measurement Timestamp: Converted to datetime64[ns]
+
+
+Rows after cleaning: 196279
