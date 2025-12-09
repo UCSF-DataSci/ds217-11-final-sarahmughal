@@ -1,25 +1,35 @@
 # Chicago Beach Weather Sensors Analysis
 
 ## Executive Summary
-This project analyzes 196,279 hourly weather observations collected between April 2015 and November 2025 from three Chicago beach weather stations. The objective was to identify temporal weather patterns and build predictive models for Air Temperature using a structured nine-phase data science workflow. After extensive cleaning, wrangling, feature engineering, and model development, three models were evaluated. XGBoost achieved the strongest predictive performance, with a test R² of 0.7879, RMSE of 4.67°C, and MAE of 2.86°C, driven largely by the high importance of Wet Bulb Temperature. The analysis reveals strong seasonal cycles, stable weekly humidity patterns, and clear relationships among meteorological variables.
+
+This project analyzes 196,279 hourly weather observations collected between April 2015 and December 2025 from three Chicago beach weather stations. The objective was to identify temporal weather patterns and build predictive models for Air Temperature using a structured nine-phase data science workflow. After extensive cleaning, wrangling, feature engineering, and model development, three models were evaluated. XGBoost achieved the strongest predictive performance, with a test R² of 0.7879, RMSE of 4.67°C, and MAE of 2.86°C, driven largely by the high importance of Wet Bulb Temperature. The analysis reveals strong seasonal cycles, stable weekly humidity patterns, and clear relationships among meteorological variables.
 
 ## Phase-by-Phase Findings
 
 ### Phase 1-2: Exploration
-The dataset contains 196,279 rows × 18 columns spanning three stations (63rd Street, Foster, Oak Street). Variables include Air Temperature, Wet Bulb Temperature, Humidity, wind metrics, rain variables, barometric measures, solar radiation, and battery life.
 
-Key Data Quality Issues Identified
-- Substantial missingness (~38.7%) across all precipitation-related variables — including Rain Intensity, Total Rain, Interval Rain, Precipitation Type, and Heading — indicating long periods with no recorded precipitation or sensor dropout patterns.
+The dataset contains 196,279 rows and 18 columns collected from three Chicago beach stations: 63rd Street, Foster, and Oak Street. It includes measurements such as air temperature, wet bulb temperature, humidity, solar radiation, and battery life, along with detailed wind, rain, and barometric metrics. The observations span from April 25, 2015 to December 2, 2025.
+
+Key Data Quality Issues Identified:
+
+- Substantial missingness (~38.7%) across all precipitation-related variables (Wet Bulb Temperature, Rain Intensity, Total Rain, Interval Rain, Precipitation Type, and Heading) indicating long periods with no recorded precipitation or sensor downtime patterns rather than random missingness.
 - Minor but non-negligible missingness in core atmospheric variables, such as Air Temperature (75 missing values) and Barometric Pressure (146 missing values), requiring imputation to maintain temporal continuity.
 - Widespread outliers detected in several numeric fields, most notably in Solar Radiation (>29,000 flagged values), many of which were negative and therefore physically impossible, suggesting sensor noise or calibration drift.
-  
+
+Initial Visualizations:
+
+- The histogram of Air Temperature shows a wide but realistic spread, with most values between –5°C and 25°C and fewer observations at the extreme ends, reflecting Chicago’s broad seasonal range.
+- The time series plot reveals a strong annual cycle with clear summer peaks and winter lows, confirming consistent seasonal patterns and highlighting the importance of temporal features for modeling.
+
 ![Figure 1: Distribution and Time Series of Air Temperature](output/q1_visualizations.png)
 *Figure 1: Early exploratory plots showing the distribution of air temperature and its behavior over time.*
 
 ### Phase 3: Data Cleaning
+
 The data cleaning phase addressed missing values, implausible measurements, outliers, and data type inconsistencies to prepare the dataset for downstream analysis. Rain-related variables with nearly 39% missingness were imputed with zeros to reflect the absence of precipitation. Negative Solar Radiation values (physically impossible and typically caused by sensor noise) were also corrected by setting them to zero. Remaining numeric fields were forward- and backward-filled to preserve temporal continuity. Outliers in numeric variables were capped using the 1.5×IQR method to constrain erroneous extremes while retaining plausible observations. No duplicate rows were found, and timestamps were standardized to datetime format. After cleaning, the dataset retained its full size of 196,279 rows, ensuring a consistent foundation for feature engineering and modeling.
 
-Key Data Cleaning Steps Taken
+Key Data Cleaning Steps Taken:
+
 - Rain-related variables (Rain Intensity, Total Rain, Interval Rain, Precipitation Type, Heading) were imputed with 0 to represent the absence of precipitation.
 - All remaining numeric variables were forward-filled and backward-filled to maintain time-series continuity.
 - Outliers across all numeric columns were capped using the 1.5×IQR rule (e.g., 97 caps for Air Temperature, 185 for Humidity, over 29k for Solar Radiation).
@@ -29,9 +39,11 @@ Key Data Cleaning Steps Taken
 - Rows before and after cleaning remained 196,279, meaning no rows were removed during the cleaning process.
 
 ### Phase 4: Data Wrangling
+
 This phase focused on preparing the dataset for temporal analysis by standardizing the timestamp, extracting useful time-based features, and ensuring the data was properly structured for downstream modeling. These transformations enabled the capture of daily, weekly, and seasonal patterns inherent in weather behavior.
 
-Key Data Wrangling Steps Taken
+Key Data Wrangling Steps Taken:
+
 - Converted Measurement Timestamp to datetime64[ns] and set it as the DataFrame index.
 - Sorted all observations chronologically to preserve time-series order.
 - Extracted temporal features including hour, day of week, month, year, day name, and a weekend indicator.
@@ -39,9 +51,11 @@ Key Data Wrangling Steps Taken
 - Verified time continuity to support rolling windows and temporal train–test splitting.
 
 ### Phase 5: Feature Engineering
+
 Feature engineering focused on enhancing the dataset with derived variables that capture meaningful physical relationships and temporal structure. These engineered features help the models better detect patterns, interactions, and trends that are not explicitly encoded in the raw measurements. Care was taken to avoid data leakage by ensuring that no engineered feature incorporated information derived from the target variable (Air Temperature).
 
 Features Created:
+
 - Temperature Difference: a derived feature representing the spread between air temperature and related atmospheric measures, capturing relative thermal contrast.
 - Wind Speed Squared: a nonlinear transformation to model the increasing impact of wind at higher speeds.
 - Air Temperature (F): a converted temperature feature retained for convenience in certain model comparisons.
@@ -53,9 +67,11 @@ Features Created:
 - 7-hour Rolling Mean of Wind Speed (wind_speed_rolling_7h): modeling short-term wind behavior to help explain rapid atmospheric changes.
   
 ### Phase 6: Pattern Analysis
+
 The pattern analysis phase explored temporal trends, seasonal cycles, and correlations among key meteorological variables. By aggregating measurements across daily, weekly, and monthly time scales, the analysis revealed clear environmental rhythms and relationships that informed both feature engineering and model interpretation. These patterns highlight predictable atmospheric dynamics in Chicago’s coastal environment and validate the usefulness of extracted temporal features.
 
 Key Patterns Identified:
+
 - Seasonal Temperature Patterns:
   - Air Temperature showed strong seasonality, with peak warmth during midsummer (highest in July 2020) and minimum temperatures in midwinter (lowest in January 2022).
   - Monthly averages ranged from –5.04°C to 25.25°C, illustrating substantial seasonal variability.
@@ -75,9 +91,11 @@ Key Patterns Identified:
 *Figure 2: Pattern analysis showing (1) monthly average air temperature with clear seasonal cycles, (2) hourly temperature variation across the day, and (3) a correlation heatmap illustrating relationships among key meteorological variables.*
 
 ### Phase 7: Modeling Preparation
+
 The modeling preparation phase focused on structuring the dataset for supervised learning while preventing data leakage and preserving the temporal integrity of the weather time series. This included defining the prediction target, selecting appropriate features, encoding categorical variables, and performing a chronological train–test split that reflects real-world forecasting conditions.
 
 Steps Performed:
+
 - Defined the target variable as Air Temperature, the value to be predicted in subsequent modeling phases.
 - Removed leakage-prone features, including any direct transformations or labels derived from the target (e.g., Air Temperature Categories, Comfort Index, Temp Ratio), as well as non-predictive identifiers such as Measurement Timestamp Label and Measurement ID.
 - One-hot encoded categorical variables, including Station Name and Wind Speed Categories, enabling tree-based models to learn from station-specific and condition-specific patterns.
@@ -87,9 +105,11 @@ Steps Performed:
 - Resulting dataset: 146,213 training rows and 36,555 test rows, preserving full chronological continuity.
 
 ### Phase 8: Modeling
+
 The modeling phase involved training and evaluating three predictive models—Linear Regression, Random Forest, and XGBoost—to estimate air temperature using the engineered features and temporally split training data. Each model was fitted on 146,213 training observations and evaluated on 36,555 unseen test observations.
 
 Models Trained:
+
 - Linear Regression: a baseline model capturing only linear relationships.
 - Random Forest Regressor: a tree-based ensemble capable of learning nonlinear interactions.
 - XGBoost Regressor: a gradient-boosting model optimized for structured datasets.
@@ -101,11 +121,13 @@ Models Trained:
 | XGBoost | 0.7879 | 4.67 | 2.86 |
 
 Interpretation:
+
 - Linear Regression provided a reasonable baseline but was limited by its inability to capture nonlinear weather dynamics.
 - Random Forest substantially improved performance, reducing both RMSE and MAE by learning complex interactions among humidity, wind speed, and thermal variables.
 - XGBoost achieved the strongest performance, explaining ~79% of variance in air temperature (R² = 0.7879) with the lowest predictive error (RMSE = 4.67°C), indicating superior generalization on unseen data.
 
 Feature Importance (XGBoost):
+
 - Wet Bulb Temperature was the dominant predictor, contributing ~62% of model importance—a physically intuitive result given its strong thermodynamic relationship with air temperature.
 - Battery Life (~18%), a proxy for sensor conditions, emerged unexpectedly relevant, suggesting systematic variance across stations or multicollinearity with environmental conditions.
 - Humidity, Barometric Pressure, Wind Direction, Solar Radiation, and wind-related features contributed modest but meaningful signal.
@@ -118,14 +140,17 @@ Overall, XGBoost provided the most accurate and stable predictions and was selec
 *Figure 3: Final modeling visualizations summarizing key results. Panel 1 compares model test R² across Linear Regression, Random Forest, and XGBoost. Panel 2 shows predicted vs. actual air temperature for XGBoost, illustrating strong alignment along the 1:1 line. Panel 3 presents the top ten most important features, highlighting Wet Bulb Temperature and Battery Life as the dominant predictors.*
 
 ### Phase 9: Results
+
 The analysis revealed several important insights about Chicago beach weather patterns and the factors that drive air temperature. Strong seasonal structure emerged, with pronounced warming during midsummer and cooling during midwinter, while humidity displayed stable weekly rhythms. After comprehensive cleaning—addressing heavy missingness in precipitation variables, capping widespread outliers, and correcting negative solar radiation values—the dataset was complete and suitable for modeling without loss of rows. Among the three models evaluated, XGBoost performed best, achieving the highest test R² (0.7879) and lowest prediction errors, indicating its ability to capture nonlinear meteorological relationships. Feature importance results showed that Wet Bulb Temperature overwhelmingly dominated predictive power, followed by Battery Life and Humidity. Overall, the workflow produced not only accurate temperature predictions but also meaningful meteorological insights into the temporal and environmental factors shaping beach weather conditions.
 
 ## Time Series Patterns
+
 The time series analysis revealed clear and interpretable temporal structure in the Chicago Beach Weather Sensors dataset. Air Temperature displayed a strong seasonal cycle, with consistent warming during midsummer—peaking notably in July 2020—and cooling during midwinter, reaching its lowest average in January 2022. These annual oscillations demonstrate stable, repeating seasonal behavior with a pronounced temperature range of roughly −5.0°C to 25.3°C across months. Daily patterns were more subtle: Humidity exhibited a mild weekly rhythm, with slightly higher levels on Wednesdays and Thursdays, though the overall weekly range remained narrow (67.20%–68.82%).
 
 Temporal relationships between variables aligned with expected meteorological behavior. Air Temperature strongly correlated with Wet Bulb Temperature (r = 0.82), reflecting their shared dependence on atmospheric moisture and heat. Wind Speed and Maximum Wind Speed were highly correlated (r = 0.91), while Humidity and Solar Radiation showed a slight negative association (r = –0.03), consistent with clearer skies occurring under lower moisture conditions. No extreme anomalies or structural breaks were detected beyond typical weather variability, suggesting a stable and reliable sensor dataset across the decade-long observation window.
 
 ## Limitations & Next Steps
+
 While the workflow produced strong predictive models and meaningful temporal insights, several limitations remain. The dataset exhibited substantial missingness in precipitation-related fields (~38.7%), requiring imputation with zeros; although this was meteorologically justified, it may smooth over nuanced precipitation patterns. Outliers were capped using the IQR method, but some extreme values—especially in Solar Radiation—may reflect true environmental events that were overly constrained. Additionally, sensor errors (e.g., negative Solar Radiation before correction) indicate that some hardware or logging issues may have influenced measurement quality.
 
 Modeling limitations also exist. Despite strong performance, especially from XGBoost, the models do not incorporate more advanced time series methods (e.g., ARIMA, LSTMs) that may capture temporal dependencies more explicitly. Feature engineering was intentionally conservative to avoid leakage, but richer temporal features (lags, differences, multi-scale rolling windows) could enhance predictive power if carefully constructed.
