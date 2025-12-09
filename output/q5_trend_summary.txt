@@ -1,0 +1,17 @@
+KEY PATTERNS IDENTIFIED:
+=======================
+
+TEMPORAL TRENDS:
+- Monthly Average Air Temperature shows a clear seasonal pattern
+- Higher temperatures in summer months (June–August)
+- Lower temperatures in winter months (December–February)
+- Monthly air temperature ranges from approximately -5.04°C to 25.25°C
+
+DAILY PATTERNS:
+- Average Humidity remains relatively stable across days of the week
+- Slightly higher humidity on Wednesdays and Thursdays
+- Average Humidity ranges from approximately 67.20% to 68.82%
+
+CORRELATIONS:
+- Strong positive correlation between Air Temperature and Wet Bulb Temperature (corr = 0.82)
+- Moderate correlation between Air Temperature and Wind Speed (corr = -0.08)
