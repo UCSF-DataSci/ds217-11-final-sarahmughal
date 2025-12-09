@@ -1,0 +1,9 @@
+Temperature Difference
+Wind Speed Squared
+Air Temperature (F)
+Comfort Index
+Temp Ratio
+Air Temperature Categories
+Wind Speed Categories
+air_temp_rolling_24h
+wind_speed_rolling_7h
