@@ -1,7 +1,7 @@
 
 DATA CLEANING REPORT
 ====================
-Rows before cleaning: 196279
+Rows Before Cleaning: 196279
 
 Missing Data Handling:
 - Air Temperature: 75 missing values (0.0%)
@@ -11,21 +11,37 @@ Missing Data Handling:
 - Precipitation Type: 75930 missing values (38.7%)
 - Barometric Pressure: 146 missing values (0.1%)
 - Heading: 75930 missing values (38.7%)
-  Method: Forward-fill (time series appropriate)
-  Result: All missing values filled
 
+Method:
+- Rain-related variables filled with 0 (absence of precipitation)
+- All remaining variables forward-filled and backward-filled
+
+Result: All missing values filled
 
 Outlier Handling:
-- Air Temperature: Detected 97 outliers using IQR method (1.5xIQR)
-  Method: Capped at bounds [-21.5, 47.3]
-  Result: 97 values capped
+- Air Temperature: 97 outliers detected (1.5×IQR)
+- Wet Bulb Temperature: 34 outliers detected (1.5×IQR)
+- Humidity: 185 outliers detected (1.5×IQR)
+- Rain Intensity: 4243 outliers detected (1.5×IQR)
+- Interval Rain: 15850 outliers detected (1.5×IQR)
+- Total Rain: 26697 outliers detected (1.5×IQR)
+- Precipitation Type: 8414 outliers detected (1.5×IQR)
+- Wind Speed: 12221 outliers detected (1.5×IQR)
+- Maximum Wind Speed: 4024 outliers detected (1.5×IQR)
+- Barometric Pressure: 4611 outliers detected (1.5×IQR)
+- Solar Radiation: 29484 outliers detected (1.5×IQR)
+- Heading: 27532 outliers detected (1.5×IQR)
+- Battery Life: 6 outliers detected (1.5×IQR)
 
+Method:
+- Outliers capped at column-specific 1.5×IQR bounds
+
+Result:
+- All detected outliers capped
 
 Duplicates Removed: 0
-
 
 Data Type Conversions:
 - Measurement Timestamp: Converted to datetime64[ns]
 
-
-Rows after cleaning: 196279
+Rows After Cleaning: 196279
