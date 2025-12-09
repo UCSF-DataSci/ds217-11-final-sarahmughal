@@ -2,16 +2,17 @@ KEY PATTERNS IDENTIFIED:
 =======================
 
 TEMPORAL TRENDS:
-- Monthly Average Air Temperature shows a clear seasonal pattern
-- Higher temperatures in summer months (June–August)
-- Lower temperatures in winter months (December–February)
-- Monthly air temperature ranges from approximately -5.04°C to 25.25°C
+- Air Temperature exhibits a pronounced seasonal cycle across the dataset.
+- Temperatures peak during midsummer, with the warmest month observed in July 2020.
+- The coldest period occurs in January 2022, consistent with typical winter cooling.
+- Over the full record, monthly average air temperature ranges from -5.04°C to 25.25°C, indicating substantial seasonal swing.
 
 DAILY PATTERNS:
-- Average Humidity remains relatively stable across days of the week
-- Slightly higher humidity on Wednesdays and Thursdays
-- Average Humidity ranges from approximately 67.20% to 68.82%
+- Humidity shows a subtle weekly rhythm, with certain days tending to be slightly more humid than others.
+- The most humid days on average are Wednesdays and Thursdays, suggesting periodic moisture patterns possibly linked to weather cycles.
+- Across the week, average humidity ranges between 67.20% and 68.82%, indicating generally stable atmospheric moisture.
 
 CORRELATIONS:
-- Strong positive correlation between Air Temperature and Wet Bulb Temperature (corr = 0.82)
-- Moderate correlation between Air Temperature and Wind Speed (corr = -0.08)
+- Air Temperature and Wet Bulb Temperature show a correlation of 0.82, indicating strong alignment between temperature-related measures.
+- Wind Speed and Maximum Wind Speed show a correlation of 0.91, reflecting expected physical relationships between wind metrics.
+- Humidity and Solar Radiation show a correlation of -0.03, suggesting clearer, sunnier conditions tend to coincide with lower atmospheric moisture.
