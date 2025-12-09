@@ -18,6 +18,9 @@ Method:
 
 Result: All missing values filled
 
+Negative Value Handling:
+- Solar Radiation: 13425 negative values corrected (set to 0)
+
 Outlier Handling:
 - Air Temperature: 97 outliers detected (1.5×IQR)
 - Wet Bulb Temperature: 34 outliers detected (1.5×IQR)
