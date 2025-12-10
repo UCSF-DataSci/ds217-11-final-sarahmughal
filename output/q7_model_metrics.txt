@@ -2,8 +2,8 @@ MODEL PERFORMANCE METRICS
 ========================
 
 LINEAR REGRESSION:
-  Train R²:  0.6646
-  Test R²:   0.4947
+  Train R²:  0.6647
+  Test R²:   0.4948
   Train RMSE: 6.08
   Test RMSE:  7.20
   Train MAE:  4.00
@@ -18,9 +18,9 @@ RANDOM FOREST:
   Test MAE:   2.96
 
 XGBOOST:
-  Train R²:  0.9011
-  Test R²:   0.7879
+  Train R²:  0.9013
+  Test R²:   0.7897
   Train RMSE: 3.30
-  Test RMSE:  4.67
-  Train MAE:  1.71
-  Test MAE:   2.86
+  Test RMSE:  4.65
+  Train MAE:  1.70
+  Test MAE:   2.84

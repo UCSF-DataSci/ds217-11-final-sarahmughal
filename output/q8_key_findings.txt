@@ -2,8 +2,8 @@ KEY FINDINGS SUMMARY
 ====================
 
 MODEL PERFORMANCE:
-- Best performing model: XGBoost (Test R² = 0.7879)
-- This model also achieves a low RMSE of 4.67, indicating strong predictive accuracy.
+- Best performing model: XGBoost (Test R² = 0.7897)
+- This model also achieves a low RMSE of 4.65, indicating strong predictive accuracy.
 - Linear Regression performed worst, while Random Forest performed well but slightly below XGBoost.
 
 FEATURE IMPORTANCE:
@@ -12,7 +12,7 @@ Top 5 most influential predictors:
 - Battery Life (importance: 0.1850)
 - Humidity (importance: 0.0546)
 - Barometric Pressure (importance: 0.0409)
-- Wind Direction (importance: 0.0287)
+- Wind Direction (importance: 0.0288)
 
 INSIGHTS:
 - Tree-based models (Random Forest and XGBoost) outperform Linear Regression, suggesting important nonlinear relationships in the data.

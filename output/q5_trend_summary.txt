@@ -10,9 +10,9 @@ TEMPORAL TRENDS:
 DAILY PATTERNS:
 - Humidity shows a subtle weekly rhythm, with certain days tending to be slightly more humid than others.
 - The most humid days on average are Wednesdays and Thursdays, suggesting periodic moisture patterns possibly linked to weather cycles.
-- Across the week, average humidity ranges between 67.20% and 68.82%, indicating generally stable atmospheric moisture.
+- Across the week, average humidity ranges between 67.21% and 68.82%, indicating generally stable atmospheric moisture.
 
 CORRELATIONS:
-- Air Temperature and Wet Bulb Temperature show a correlation of 0.82, indicating strong alignment between temperature-related measures.
-- Wind Speed and Maximum Wind Speed show a correlation of 0.91, reflecting expected physical relationships between wind metrics.
-- Humidity and Solar Radiation show a correlation of -0.03, suggesting clearer, sunnier conditions tend to coincide with lower atmospheric moisture.
+- Air Temperature and Wet Bulb Temperature show a correlation of 0.68, indicating strong alignment between temperature-related measures.
+- Wind Speed and Maximum Wind Speed show a correlation of 0.63, reflecting expected physical relationships between wind metrics.
+- Humidity and Solar Radiation show a correlation of -0.15, suggesting clearer, sunnier conditions tend to coincide with lower atmospheric moisture.
